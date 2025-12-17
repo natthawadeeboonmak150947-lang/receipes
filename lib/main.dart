@@ -83,6 +83,23 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+              return buildRecipeCard(Recipe.samples[index]);
+             },
+              itemCount: Recipe.samples.length,
+           ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildRecipeCard(Recipe recipe) {
+    return Card(
+      child: Column(
+      children: <Widget>[
+          Image(image: AssetImage(recipe.imageUrl)),
+          Text(recipe.imgLabel),
+        ],
+      ),
     );
   }
 }
