@@ -4,102 +4,85 @@ import 'package:receipes/recipe_detail.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(const ReceipesApp());
+  runApp(const RecipeApp());
 }
-
-class ReceipesApp extends StatelessWidget {
-  const ReceipesApp({super.key});
-
+ 
+class RecipeApp extends StatelessWidget {
+  const RecipeApp({super.key});
+ 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Recipe Calculator',
       theme: ThemeData(
+        textTheme: GoogleFonts.robotoSlabTextTheme(),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 253, 252, 255),
         appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 211, 59, 59),
           centerTitle: true,
-          backgroundColor: Color.fromARGB(255, 255, 121, 87),
         ),
       ),
-      home: const MyHomePage(title: 'Receip Calculator'),
+      home: const MyHomePage(title: 'Recipe Calculator'),
     );
   }
 }
-
+ 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  
   final String title;
-
+ 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-
+ 
 class _MyHomePageState extends State<MyHomePage> {
-  
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: SafeArea(child: Container(
-           child: ListView.builder(
-             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  //print((Recipe.samples[index].imageUrl));
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => RecipeDetail(recipe:Recipe.samples[index]),
-                    ),
-                  );
-                },
-                child: buildRecipeCard(Recipe.samples[index]),
-              );
-             },
-           ),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: SafeArea(
+        child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () {
+                // Handle tap event if needed
+                print('You taped on${Recipe.samples[index].imgLabel}');
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RecipeDetail(recipe: Recipe.samples[index]);
+                }));
+              },
+              child: buildRecipeCard(Recipe.samples[index]),
+            );
+          },
+          itemCount: Recipe.samples.length,
         ),
       ),
     );
   }
-
-  Widget buildRecipeCard(Recipe recipe) {
-    return Card(
-      elevation: 2.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-        children: <Widget>[
-            Image(image: AssetImage(recipe.imageUrl)),
-            SizedBox(height: 8.0,),
-            Text(
-              recipe.imgLabel, style:GoogleFonts.robotoSlab(fontSize: 20.0, fontWeight: FontWeight.bold)
-            ),
-          ],
-        ),
-      ),
-              return buildRecipeCard(Recipe.samples[index]);
-             },
-              itemCount: Recipe.samples.length,
-           ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildRecipeCard(Recipe recipe) {
-    return Card(
+}
+ 
+Widget buildRecipeCard(Recipe recipe) {
+  return Card(
+    elevation: 2.0,
+    color: Colors.white,
+    shape: BeveledRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
-      children: <Widget>[
-          Image(image: AssetImage(recipe.imageUrl)),
-          Text(recipe.imgLabel),
+        children: <Widget>[
+          Text(
+            recipe.imgLabel,
+            style: GoogleFonts.robotoSlab(fontSize: 24.0, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8.0),
+          Image(image: AssetImage(recipe.imgUrl)),
         ],
       ),
-    );
-  }
+    ),
+  );
 }
