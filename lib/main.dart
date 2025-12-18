@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(title: Text(widget.title)),
       body: SafeArea(child: Container(
            child: ListView.builder(
+              itemCount: Recipe.samples.length,
              itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
